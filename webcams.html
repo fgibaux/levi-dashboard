@@ -64,19 +64,19 @@
       <div class="row">
         <div class="span6">
 		  <h4>Front pistes</h4>
-          <p><img src="http://213.28.111.35/record/current.jpg"></p>
+          <p><img class="refreshmax" src="http://213.28.111.35/record/current.jpg?i=1"></p>
         </div>
 		<div class="span6">
 		  <h4>Hissitie</h4>
-          <p><img src="http://213.28.111.31/record/current.jpg"></p>
+          <p><img class="refreshmax" src="http://213.28.111.31/record/current.jpg?i=1"></p>
         </div>
 		<div class="span6">
 		  <h4>Levi North chair lift 1 </h4>
-          <p><img src="http://213.28.111.13/cgi-bin/image.jpg?camera=left&size=640x480&quality=50jpg"></p>
+          <p><img class="refresh" src="http://213.28.111.13/cgi-bin/image.jpg?camera=left&size=640x480&quality=50"></p>
         </div>
 		<div class="span6">
 		  <h4>Zero Point 2</h4>
-          <p><img src="http://213.28.111.13/cgi-bin/image.jpg?camera=right&size=640x480&quality=50"></p>
+          <p><img class="refresh" src="http://213.28.111.13/cgi-bin/image.jpg?camera=right&size=640x480&quality=50"></p>
         </div>
 <!--
 		<div class="span6">
@@ -86,39 +86,83 @@
 -->
 		<div class="span6">
 		  <h4>Northeast pistes 1</h4>
-          <p><img src="http://213.28.111.16/cgi-bin/image.jpg?camera=left&size=640x480&quality=50"></p>
+          <p><img class="refresh" src="http://213.28.111.16/cgi-bin/image.jpg?camera=left&size=640x480&quality=50"></p>
         </div>
 		<div class="span6">
 		  <h4>Northeast pistes 2</h4>
-          <p><img src="http://213.28.111.16/cgi-bin/image.jpg?camera=right&size=640x480&quality=50"></p>
+          <p><img class="refresh" src="http://213.28.111.16/cgi-bin/image.jpg?camera=right&size=640x480&quality=50"></p>
         </div>
 		<div class="span6">
 		  <h4>South piste 1</h4>
-          <p><img src="http://213.28.111.15/cgi-bin/image.jpg?camera=left&size=640x480&quality=50&brightness=0&backlight=4&sharpen=4"></p>
+          <p><img class="refresh" src="http://213.28.111.15/cgi-bin/image.jpg?camera=left&size=640x480&quality=50&brightness=0&backlight=4&sharpen=4"></p>
         </div>
 		<div class="span6">
 		  <h4>South piste 2</h4>
-          <p><img src="http://213.28.111.15/cgi-bin/image.jpg?camera=right&size=640x480&quality=60&brightness=0&backlight=4&sharpen=4"></p>
+          <p><img class="refresh" src="http://213.28.111.15/cgi-bin/image.jpg?camera=right&size=640x480&quality=60&brightness=0&backlight=4&sharpen=4"></p>
         </div>
 		<div class="span6">
 		  <h4>First snow track 1</h4>
-          <p><img src="http://213.28.111.14/cgi-bin/image.jpg?camera=left&size=640x480&quality=50"></p>
+          <p><img class="refresh" src="http://213.28.111.14/cgi-bin/image.jpg?camera=left&size=640x480&quality=50"></p>
         </div>
 		<div class="span6">
 		  <h4>First snow track 2</h4>
-          <p><img src="http://213.28.111.14/cgi-bin/image.jpg?camera=right&size=640x480&quality=50"></p>
+          <p><img class="refresh" src="http://213.28.111.14/cgi-bin/image.jpg?camera=right&size=640x480&quality=50"></p>
         </div>
 		<div class="span6">
 		  <h4>Gondola area</h4>
-          <p><img src="http://213.28.111.12/record/current.jpg"></p>
+          <p><img class="refresh" src="http://213.28.111.12/record/current.jpg?i=1"></p>
         </div>
 		<div class="span6">
 		  <h4>Gondola cabin lift lower station</h4>
-          <p><img src="http://213.28.111.33/record/current.jpg"></p>
+          <p><img class="refresh" src="http://213.28.111.33/record/current.jpg?i=1"></p>
         </div>
       </div>
 
       <hr>
+
+	<script>
+	
+	function microtime (get_as_float) {
+	  // http://kevin.vanzonneveld.net
+	  // +   original by: Paulo Freitas
+	  // *     example 1: timeStamp = microtime(true);
+	  // *     results 1: timeStamp > 1000000000 && timeStamp < 2000000000
+	  var now = new Date().getTime() / 1000;
+	  var s = parseInt(now, 10);
+
+	  return (get_as_float) ? now : (Math.round((now - s) * 1000) / 1000) + ' ' + s;
+	}
+	
+		reloadAll = function() {
+			$.each($("img.refresh"), function(index,value) {
+				var src = value.src;
+				var pos = src.indexOf("nocache");
+				if (pos > 0) {
+					src = src.substr(0,pos+8);
+					value.src=src+microtime();
+				} else {
+					value.src=src+"&nocache="+microtime();
+				}
+			});
+		}
+		
+		reloadMax = function() {
+			$.each($("img.refreshmax"), function(index,value) {
+				var src = value.src;
+				var pos = src.indexOf("nocache");
+				if (pos > 0) {
+					src = src.substr(0,pos+8);
+					value.src=src+microtime();
+				} else {
+					value.src=src+"&nocache="+microtime();
+				}
+			});
+		}
+		
+		window.setInterval(reloadAll,30000);
+		window.setInterval(reloadMax,1000);
+
+	</script>
 
     </div> <!-- /container -->
 
