@@ -70,19 +70,44 @@
 			
 		</div>
         <div class="span5">
+          <h2>Température</h2>
+          <p><img src="http://www.levikeskus.fi/online/saa/nyt/OutsideTempHistory.gif"></p>
+        </div>
+        <div class="span5">
           <h2>Activité aurores</h2>
           <p><img src="http://www.swpc.noaa.gov/pmap/gif/pmapN.gif"></p>
         </div>
         <div class="span5">
           <h2>Position des bus</h2>
-          <p><img src="http://www.tamtron.net/skibus/skibus_big.jpg" /></p>
-          <p><a class="btn" href="#">Voir les horaires &raquo;</a></p>
+          <p><img class="refresh" src="http://www.tamtron.net/skibus/skibus_big.jpg" /></p>
+          <p>
+          <a class="btn" href="http://www.levi.fi/media/files/pdf/levi-ski-resort/ski_bus_timetable_30-11-2012_5-5-2013.pdf">Voir les horaires [PDF] &raquo;</a>
+          <a class="btn btn-info" href="http://www.levi.fi/en/pistes-and-tracks/skibus.html">Voir sur levi.fi &raquo;</a>
+          </p>
        </div>
       </div>
 
       <hr>
 
     </div> <!-- /container -->
+    
+    <script type="text/javascript">
+        reloadAll = function() {
+            $.each($("img.refresh"), function(index,value) {
+            	var timestamp = new Date().getTime();
+                var src = value.src;
+                var pos = src.indexOf("nocache");
+                if (pos > 0) {
+                    src = src.substr(0,pos+7);
+                    value.src=src+timestamp;
+                } else {
+                    value.src=src+"?nocache"+timestamp;
+                }
+            });
+        }
+        
+        window.setInterval(reloadAll,30000);
+    </script>
 
   </body>
 </html>
